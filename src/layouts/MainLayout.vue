@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          <div>Sage Manager</div>
+          <div>S&B Manager</div>
         </q-toolbar-title>
         <div class="">
           <div>PlayerProfile: {{ useSageStore().playerProfile }}</div>

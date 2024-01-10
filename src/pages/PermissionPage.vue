@@ -1,38 +1,72 @@
 <template>
-  <q-page class="row items-center justify-evenly">
+  <q-page class="row">
     <div class="col">
-      <q-table dense :rows="profile?.profileKeys" :columns="columns">
-        <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td key="key" :props="props">
-              {{ props.row.key }}{{ props.rowIndex }}
-            </q-td>
-            <q-td key="expireTime" :props="props">
-              <q-badge color="green">
-                {{ props.row.expireTime }}
-              </q-badge>
-            </q-td>
+      <q-table
+        flat
+        bordered
+        grid
+        title="Permissions"
+        :rows="profile?.profileKeys"
+        :columns="columns"
+        row-key="name"
+        :filter="filter"
+        hide-header
+      >
+        <template v-slot:top-right>
+          <q-input
+            borderless
+            dense
+            debounce="300"
+            v-model="filter"
+            placeholder="Search"
+          >
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
 
-            <q-td
-              :key="k"
-              :props="props"
-              v-for="k in Object.keys(permissions[0])"
-            >
-              <q-badge
-                :color="
-                  SagePermissions.fromPermissions(props.row.permissions)[k]
-                    ? 'green'
-                    : 'red'
-                "
-                :label="
-                  SagePermissions.fromPermissions(props.row.permissions)[
-                    k
-                  ].toString()
-                "
-              >
-              </q-badge>
-            </q-td>
-          </q-tr>
+        <template v-slot:item="props">
+          <div class="q-pa-xs col-xs-12 col-sm-6 col-md-4">
+            <q-card flat bordered>
+              <q-card-section class="text-center">
+                {{ props.row.key }}
+              </q-card-section>
+
+              <q-separator />
+
+              <q-card-section class="text-center"> Permissions </q-card-section>
+              <q-separator />
+
+              <q-card-section class="flex flex-center">
+                <div class="col">
+                  <div
+                    :key="k"
+                    v-for="k in Object.keys(permissions[0])"
+                    class="row"
+                  >
+                    <div class="col">{{ k }}</div>
+
+                    <q-badge
+                      :color="
+                        SagePermissions.fromPermissions(props.row.permissions)[
+                          k
+                        ]
+                          ? 'green'
+                          : 'red'
+                      "
+                      :label="
+                        SagePermissions.fromPermissions(props.row.permissions)[
+                          k
+                        ].toString()
+                      "
+                    >
+                    </q-badge>
+                  </div>
+                </div>
+              </q-card-section>
+            </q-card>
+          </div>
         </template>
       </q-table>
     </div>
