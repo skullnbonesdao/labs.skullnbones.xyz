@@ -1,4 +1,4 @@
-# S&B Sage (sage-skullnbones-xyz)
+# S&B Manager (manager-skullnbones-xyz)
 
 An sage interface by skullnbones
 
